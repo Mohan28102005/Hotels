@@ -1,0 +1,66 @@
+body{
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container{
+    flex:1;
+    margin-top: 1rem;
+}
+.f-info{
+    background-color:aliceblue;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.f-social i{
+    /* height: 1rem; */
+    margin-right: 1rem;
+}
+.f-other{
+    display:flex;
+}
+#privacy{
+    margin-right: 1rem;
+}
+.all-cards{
+    display:flex;
+    flex-wrap: wrap;
+}
+.card{
+    border: none;
+    margin-right: 3rem;
+    margin-bottom: 3rem;
+}
+.card col-lg-4 col-md-6 mb-4 img{
+    width:12rem;
+}
+#submit{
+    /* margin-left:550px; */
+    margin-bottom: 50px;;
+}
+#new{
+    margin-left: 290px;
+}
+#show{
+    display: flex;
+    justify-content: space-between;
+}
+.naver{
+    margin-left:800px;
+}
+.show-main{
+    display: flex;
+    flex-direction: row;
+}
+.show-main-left img{
+   height:500px;
+   width:500px; 
+}
+#map{
+    width:80%;
+    height:500px;
+    background-color: pink;
+}

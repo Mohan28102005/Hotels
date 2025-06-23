@@ -1,0 +1,48 @@
+<% layout("/layouts/boilerplate") -%>
+<body>
+    <h1>Edit the data</h1>
+    <form method="post" enctype="multipart/form-data" action="/listings/<%=allData._id%>?_method=PATCH" class="needs-validation" novalidate>
+        <div class="mb-3">
+                <label for="title">Title</label>
+                <input name="listing[title]" id="title" required class="form-control" value=<%=allData.title%>>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="description">Enter description</label>
+                <textarea id="description" class="form-control" required name="listing[description]"><%= allData.description %></textarea>
+                <div class="invalid-feedback">
+                    Please enter description
+                </div>
+            </div>
+            <div class="mb-3">
+                <img src="<%=allData.image.url%>">
+            </br>
+                <label  for="image">Image File</label>
+                <input id="image" type="file" name="listing[image]" class="form-control" >
+            </div>
+            <div class="mb-3">
+                <label for="price">Price</label>
+                <input id="price" class="form-control" required name="listing[price]"  value=<%=allData.price%>>
+                <div class="invalid-feedback">
+                    Please enter Price
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="location">Location</label>
+                <input name="listing[location]" id="location" required class="form-control" value=<%=allData.location%>>
+                <div class="invalid-feedback">
+                    Please enter Location
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="country">country</label>
+                <input id="country" class="form-control" required name="listing[country]" value=<%=allData.country%>>
+                <div class="invalid-feedback">
+                    Please enter Country
+                </div>
+            </div>
+        <button id="submit" class="btn btn-danger">Edit</button>
+    </form>
+</body>

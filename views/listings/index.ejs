@@ -1,0 +1,145 @@
+<% layout("/layouts/boilerplate") -%>
+    <style>
+        #icons-names {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .icon-name {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.7;
+            margin-right: 2.5rem;
+
+        }
+
+        .icon-name:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .icon-name p {
+            font-size: 0.8rem;
+        }
+
+        .toggle-switch {
+            border: 1px solid rgba(0, 0, 0, 0.089);
+            border-radius: 0.7rem;
+            padding-top: 0.8rem;
+            width: 250px;
+            font-size: small;
+            height: 50px;
+            padding-bottom: 2rem;
+        }
+
+        .toggles {
+            display: inline;
+        }
+
+        .form-search {
+            width: 30rem;
+        }
+
+        .search-box {
+            margin-right: 2rem;
+        }
+    </style>
+
+    <body>
+        <div id="icons-names">
+            <div class="icon-name">
+                <i class="fa-solid fa-mountain-city"></i>
+                <p>Adventure</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-suitcase-rolling"></i>
+                <p>Trips</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-hotel"></i>
+                <p>Hotels</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-water-ladder"></i>
+                <p>Pools</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-camera"></i>
+                <p>Shoots</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-wine-bottle"></i>
+                <p>Drinks</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-tree"></i>
+                <p>Forests</p>
+            </div>
+            <div class="icon-name">
+                <i class="fa-solid fa-umbrella-beach"></i>
+                <p>Beach</p>
+            </div>
+            <div class="form-check form-switch toggle-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                <label class="form-check-label" for="switchCheckChecked">Prices After Taxes</label>
+            </div>
+        </div>
+        <form class="d-flex mx-auto form-search" role="search" method="post" action="/search">
+            <input class="form-control form-input search-box awesomplete" name="query" type="search" placeholder="Search for your destination"
+                aria-label="Search" id="searchInput" data-list=""/>
+            <button class="btn btn-outline-danger" type="submit">Search</button>
+        </form>
+        <!-- <h3 class="text-center my-4">All Hotels</h3> -->
+        <div class="container">
+            <div class="row">
+                <% for (let listing of allListings) { %>
+                    <% if (listing.image && listing.image.url) { %>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>"
+                                    style="height: 200px; object-fit: cover;">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">
+                                        <%= listing.title %>
+                                    </h5>
+                                    <p class="card-text">₹ <%= listing.price %>/per Night
+                                            <i class="toggles">&nbsp;+18% GST</i>
+                                    </p>
+                                    <a href="/listings/<%= listing._id %>" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } %>
+            </div>
+        </div>
+    </body>
+    <script>
+        let gst = document.getElementsByClassName("toggles");
+        let taxSwitch = document.getElementById("switchCheckChecked");
+        taxSwitch.addEventListener("click", () => {
+            for (info of gst) {
+                if (info.style.display == "none") {
+                    info.style.display = "inline";
+                } else {
+                    info.style.display = "none";
+                }
+            }
+        })
+        const input=document.querySelector("#searchInput");
+        const awesomplete=new Awesomplete(input,{
+            minChars:1,
+            maxItems:7,
+            autoFirst:true 
+        })
+        input.addEventListener("input",async()=>{
+            const query=input.value.trim();
+            if(query.length==0)return;
+            const res=await fetch(`/search/api?query=${encodeURIComponent(query)}`);
+            const data=await res.json();
+            const suggestions=data.map(item=>(item.title||item.location||item.country));
+            const uniqueSuggestions=[...new Set(suggestions)]
+            awesomplete.list=uniqueSuggestions;
+        })
+    </script>
