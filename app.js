@@ -4,7 +4,7 @@ if(process.env.NODE_ENV!="production"){
 // console.log(process.env.CLOUD_NAME);
 const express=require("express");
 const app=express();
-const port=8080;
+const port = process.env.PORT || 8080;
 const mongoose = require('mongoose');
 var methodOverride = require('method-override')
 app.set("view engine","ejs");
@@ -26,7 +26,7 @@ const { redirectUrl } = require("./middleware.js");
 const Listing = require("./models/listing.js");
 app.use(methodOverride('_method'))
 app.listen(port,()=>{
-    console.log("listening to port 8080");
+    console.log("listening to port");
 })
 const dataUrl=process.env.ATLASDB_URL;
 const mongoUrl='mongodb://127.0.0.1:27017/wanderlist';
